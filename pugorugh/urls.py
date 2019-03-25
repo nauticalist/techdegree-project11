@@ -8,9 +8,7 @@ from rest_framework.authtoken.views import obtain_auth_token
 from pugorugh.views import (UserRegisterView, RetrieveDogView, UpdateDogView,
                             RetrieveUpdateUserPrefView)
 
-
 app_name = 'pugorugh'
-
 
 urlpatterns = format_suffix_patterns([
     url(r'^api/user/login/$', obtain_auth_token, name='login-user'),
@@ -29,5 +27,5 @@ urlpatterns = format_suffix_patterns([
         name='update-dog'),
     url(r'^api/user/preferences/$',
         RetrieveUpdateUserPrefView.as_view(),
-        name='update-preferences'),
+        name='user-preferences'),
 ])
