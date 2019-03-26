@@ -45,6 +45,7 @@ class Dog(models.Model):
     age = models.IntegerField(blank=True, null=True)
     gender = models.CharField(max_length=1, choices=GENDER)
     size = models.CharField(max_length=2, choices=SIZE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

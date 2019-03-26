@@ -37,9 +37,13 @@ class DogSerializer(serializers.ModelSerializer):
             'breed',
             'age',
             'gender',
-            'size'
+            'size',
+            'user',
         )
         model = models.Dog
+        extra_kwargs = {
+            'user': {'read_only': True}
+        }
 
 
 class UserPrefSerializer(serializers.ModelSerializer):

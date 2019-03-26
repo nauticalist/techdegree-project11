@@ -14,3 +14,14 @@ class UpdateOwnPreferences(permissions.BasePermission):
             return True
 
         return obj.user.id == request.user.pk
+
+
+class UpdateOwnDog(permissions.BasePermission):
+    """
+    Allow users to edit and delete their own dogs
+    """
+    def has_object_permission(self, request, view, obj):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        
+        return obj.user.id == request.user.pk

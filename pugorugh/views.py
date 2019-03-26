@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import (IsAuthenticated, AllowAny)
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
+from rest_framework.authentication import TokenAuthentication
 
 from . import models
 from . import serializers
@@ -140,3 +141,20 @@ class UpdateDogView(generics.UpdateAPIView):
             )
         serializer = serializers.DogSerializer(dog)
         return Response(data=serializer.data)
+
+
+class DogProfileViewSet(viewsets.ModelViewSet):
+    """
+    Handled managing dogs
+    """
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.DogSerializer
+    queryset = models.Dog.objects.all()
+    permission_classes = (permissions.UpdateOwnDog,
+                          IsAuthenticated, )
+
+    def perform_create(self, serializer):
+        """
+        Sets the creater of the dog to the logged in user
+        """
+        serializer.save(user=self.request.user)

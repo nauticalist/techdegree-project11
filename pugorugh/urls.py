@@ -1,14 +1,15 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
-
+from rest_framework.routers import DefaultRouter
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken.views import obtain_auth_token
 
 from pugorugh.views import (UserRegisterView, RetrieveDogView, UpdateDogView,
-                            RetrieveUpdateUserPrefView)
+                            RetrieveUpdateUserPrefView, DogProfileViewSet)
 
 app_name = 'pugorugh'
+
 
 urlpatterns = format_suffix_patterns([
     url(r'^api/user/login/$', obtain_auth_token, name='login-user'),
@@ -28,4 +29,19 @@ urlpatterns = format_suffix_patterns([
     url(r'^api/user/preferences/$',
         RetrieveUpdateUserPrefView.as_view(),
         name='user-preferences'),
+
 ])
+
+urlpatterns += [
+    url(r'^api/dogs$', DogProfileViewSet.as_view({"get": "list"}),
+        name='dogs',
+    ),
+    url(r'^api/dogs/(?P<pk>-?\d+)/$', 
+        DogProfileViewSet.as_view(
+            {"get": "retrieve", 
+             "post": "create", 
+             "put": "update", 
+             "patch": "partial_update", 
+             "delete": "destroy"}),
+        name="dog-detail"),
+]
