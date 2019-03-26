@@ -33,7 +33,9 @@ urlpatterns = format_suffix_patterns([
 ])
 
 urlpatterns += [
-    url(r'^api/dogs$', DogProfileViewSet.as_view({"get": "list"}),
+    url(r'^api/dogs$',
+        DogProfileViewSet.as_view(
+            {"get": "list", "post": "create",}),
         name='dogs',
     ),
     url(r'^api/dogs/(?P<pk>-?\d+)/$', 
