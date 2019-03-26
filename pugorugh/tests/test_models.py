@@ -18,7 +18,8 @@ class ModelTests(TestCase):
         self.dog = models.Dog.objects.create(
             name='dogy',
             gender='m',
-            size='l'
+            size='l',
+            user=self.test_user
         )
     
     def test_dog_str(self):

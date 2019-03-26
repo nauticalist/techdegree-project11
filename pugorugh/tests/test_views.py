@@ -22,17 +22,20 @@ class ViewTests(TestCase):
             breed='labrador',
             age='27',
             gender='m',
-            size='l'
+            size='l',
+            user=self.user
         )
         self.dog2 = models.Dog.objects.create(
             name='dogy_liked',
             gender='f',
-            size='s'
+            size='s',
+            user=self.user
         )
         self.dog3 = models.Dog.objects.create(
             name='dogy_disliked',
             gender='m',
-            size='xl'
+            size='xl',
+            user=self.user
         )
         self.likeduserdog = models.UserDog.objects.create(
             user=self.user,
